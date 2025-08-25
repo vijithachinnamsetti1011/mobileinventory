@@ -9,7 +9,7 @@ export class ToastService {
   async presentToast(position: 'top' | 'middle' | 'bottom', color: 'success' | 'danger' | 'warning', message ="Contact saved!") {
     const toast = await this.toastMessage.create({
       message: message,
-      duration: 1500,
+      duration: 1000,
       position: position,
       color:color
     });

@@ -30,7 +30,9 @@ export class SqLiteService {
     await this.db!.execute(query);
   }
   async insertData(tableName: string, data: Data[]): Promise<void> {
-    if (!this.db) await this.ConnectToDatabase();
+    if (!this.db){ 
+      await this.ConnectToDatabase();
+    }
     for (const row of data) {
       const columns = Object.keys(row).join(', ');
       const placeholders = Object.keys(row).map(() => '?').join(', ');

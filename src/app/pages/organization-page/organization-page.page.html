@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Organizations</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2>Select Organization</h2>
+  <app-search-bar (searchChange)="onSearch($event)"></app-search-bar>
+  <ion-list>
+    <ion-item *ngFor="let row of filteredOrganizations" button (click)="selectOrganization(row)" [class.selected]="selectedOrg?.[0] === row[0]"> 
+      <ion-icon *ngIf="selectedOrg?.[0] === row[0]" name="checkmark-circle" slot="start" color="primary"></ion-icon>
+      <div>
+        <ion-icon name="business-sharp"></ion-icon>
+        <strong>{{ row[3] }}</strong> 
+        <p>{{ row[5] }}</p> 
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="continue()">Continue</ion-button>
+
+  <p *ngIf="filteredOrganizations.length === 0">No results found.</p>
+</ion-content>

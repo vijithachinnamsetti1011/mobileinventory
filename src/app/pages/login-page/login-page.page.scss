@@ -1,4 +1,26 @@
-h1{
-    text-align: center;
+.login-background {
+  position: absolute;
+  inset: 0;
+  background: url("https://t3.ftcdn.net/jpg/12/79/85/16/240_F_1279851693_xH3zF9uWsZ0HLX4y5iENH5Q8QB1x9VJH.jpg") no-repeat center center / cover;
+  
+}
+ion-content {
+  --background: none;
 }
 
+ion-list, ion-item {
+  background: transparent !important;
+  --background: transparent !important;
+  box-shadow: none;
+  
+}
+
+ion-input {
+  --background: transparent !important;
+  color: #000000; 
+}
+
+h1 {
+  text-align: center;
+  color: #000000; 
+}
