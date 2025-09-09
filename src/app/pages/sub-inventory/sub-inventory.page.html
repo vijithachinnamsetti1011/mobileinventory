@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <app-back-button></app-back-button>
+    </ion-buttons>
+    <ion-title>SubInventory</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let row of subInventory" (click)="select(row.SubInventoryCode)">
+      <strong>{{row.SubInventoryCode}}</strong>
+      <p>{{row.SubInventoryDesc}}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

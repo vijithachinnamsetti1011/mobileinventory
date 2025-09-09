@@ -1,0 +1,4 @@
+
+<div *ngIf="message" [ngClass]="{'online': type === 'online', 'offline': type === 'offline'}" class="toast">
+  {{ message }}
+</div>

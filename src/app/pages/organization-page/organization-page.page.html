@@ -7,18 +7,19 @@
 <ion-content class="ion-padding">
   <h2>Select Organization</h2>
   <app-search-bar (searchChange)="onSearch($event)"></app-search-bar>
+
   <ion-list>
-    <ion-item *ngFor="let row of filteredOrganizations" button (click)="selectOrganization(row)" [class.selected]="selectedOrg?.[0] === row[0]"> 
-      <ion-icon *ngIf="selectedOrg?.[0] === row[0]" name="checkmark-circle" slot="start" color="primary"></ion-icon>
+    <ion-item *ngFor="let row of filteredOrganizations"  (click)="selectOrganization(row)" [class.selected]="selectedOrg?.InventoryOrgId === row.InventoryOrgId">
+      <ion-icon *ngIf="selectedOrg?.InventoryOrgId === row.InventoryOrgId" name="checkmark-circle" slot="start" color="primary"></ion-icon>
       <div>
-        <ion-icon name="business-sharp"></ion-icon>
-        <strong>{{ row[3] }}</strong> 
-        <p>{{ row[5] }}</p> 
+        <!-- <ion-icon name="business-sharp"></ion-icon> -->
+        <strong>{{ row.InventoryOrgCode }}</strong>
+        <p>{{ row.InventoryOrgName }}</p>
       </div>
     </ion-item>
   </ion-list>
 
-  <ion-button expand="block" color="primary" (click)="continue()">Continue</ion-button>
+<ion-button expand="block" (click)="continue()" [disabled]="!selectedOrg"> Continue </ion-button>
 
   <p *ngIf="filteredOrganizations.length === 0">No results found.</p>
 </ion-content>

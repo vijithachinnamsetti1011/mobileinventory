@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" *ngIf="showBackButton">
+      <app-back-button></app-back-button>
+    </ion-buttons>
+    <ion-title>{{ pageTitle }}</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-label position="fixed">Doc#</ion-label>
+      <ion-input 
+        placeholder="Scan Doc" 
+        (ionInput)="onScanInput($event)">
+      </ion-input>
+      <ion-button slot="end" fill="clear" (click)="toggleSearch()">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="isSearchVisible">
+    <app-search-bar (searchChange)="onSearchChange($event)"></app-search-bar>
+  </ion-toolbar>
+</ion-header>

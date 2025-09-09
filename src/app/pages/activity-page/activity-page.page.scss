@@ -1,0 +1,24 @@
+ion-card {
+  border-radius: 12px;
+  margin: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+
+  // Animation styles
+  &.animate-card {
+    opacity: 0;
+    transform: translateX(100%);
+    animation: slideInRight 0.6s ease forwards;
+  }
+}
+
+// Keyframes for right-to-left slide in
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

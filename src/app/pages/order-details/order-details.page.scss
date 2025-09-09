@@ -1,0 +1,12 @@
+.item-with-icon {
+  position: relative;
+}
+
+.forward-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: var(--ion-color-medium);
+}

@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <app-back-button></app-back-button>
+    </ion-buttons>
+    <ion-title>receive-order</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="itemdetails">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Item: {{ items[0]?.ItemNumber }}</ion-card-title>
+        <ion-card-subtitle>{{ items[0]?.ItemDesc }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>PO Number:</strong> {{ items[0]?.PoNumber }}</p>
+        <p><strong>Delivery Date:</strong> {{ items[0]?.NeedByDate }}</p>
+        <p><strong>Shipment Line Number:</strong> {{ items[0]?.PoShipmentNumber }}</p>
+        <p><strong>Quantity Ordered:</strong> {{ items[0]?.QtyOrdered }} {{ items[0]?.ItemUom }}</p>
+        <p><strong>Routing Name:</strong> {{ items[0]?.RoutingName }}</p>
+        
+          <ion-item>
+            <ion-label>Coo: </ion-label>
+            <ion-input formControlName="coo" type="text" ngDefaultControl></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>SubInventory: </ion-label>
+            <ion-input [value]='subinventorycode' formControlName="subinv"></ion-input>
+            <ion-icon slot="end" name="create" (click)="Reset()"></ion-icon>
+            <ion-icon slot="end" name="chevron-forward-sharp" (click)="openSubInventory()"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Locator: </ion-label>
+            <ion-input formControlName="loc"></ion-input>
+            <ion-icon slot="end" name="create" (click)="Reset()"></ion-icon>
+            <ion-icon slot="end" name="chevron-forward-sharp" (click)="openLocators()"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Qty Receiving: </ion-label>
+            <ion-input formControlName="qty" type="Number" ngDefaultControl></ion-input>
+          </ion-item>
+
+          <!-- <ion-item>
+            <ion-label>Notes and Attachments: </ion-label>
+            <ion-input formControlName="n&a" ngDefaultControl></ion-input>
+          </ion-item> -->
+      
+      </ion-card-content>
+    </ion-card>
+    <ion-button expand="block" type="submit" (click)="submitGoodsReceipt()">Receive + Next</ion-button>
+  </form>
+</ion-content>

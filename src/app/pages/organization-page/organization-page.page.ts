@@ -1,14 +1,15 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonSearchbar, IonIcon, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonSearchbar, IonIcon, IonButton, IonLabel } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { SearchBarComponent } from "src/app/common-components/search-bar/search-bar.component";
 import { addIcons } from 'ionicons';
 import { business, businessSharp, checkmarkCircle } from 'ionicons/icons';
 import { Subscription } from 'rxjs';
+import { SqLiteService } from 'src/app/services/sq-lite-service';
+import { NavController } from '@ionic/angular'
 
 @Component({
   selector: 'app-organization-page',
@@ -26,57 +27,44 @@ export class OrganizationPagePage implements OnInit, OnDestroy {
   selectedOrg: any = null;
   subscription!: Subscription;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
-    addIcons({checkmarkCircle,businessSharp,business});
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private sql: SqLiteService, private nav: NavController) {
+    addIcons({ checkmarkCircle, businessSharp, business });
   }
 
   ngOnInit() {
-    this.orgId = this.route.snapshot.paramMap.get('orgId');
-    console.log("Organization ID:", this.orgId);
-    if (this.orgId) {
-      this.getOrganizationDetails(this.orgId);
-    }
-  }
-  getOrganizationDetails(orgId: string) {
-    this.subscription = this.http.get<any>(`${environment.organizationURL}${orgId}`).subscribe({
-      next: (res) => {
-        console.log("API Response:", res);
-        this.metadata = res[0].map((col: string) =>
-          col.endsWith("_PK") ? col.replace("_PK", "") : col
-        );
-        this.organizations = res.slice(1);
-        this.filteredOrganizations = [...this.organizations];
-        console.log("Metadata:", this.metadata);
-        console.log("Organizations:", this.organizations);
-      },
-      error: (err) => {
-        console.error("API Error:", err);
-      }
-    });
+    this.organizationdetails()
   }
 
-  onSearch(term: string = '') {
-    const lowerTerm = term.toLowerCase();
-    if (!term) {
-      this.filteredOrganizations = [...this.organizations];
-    } else {
-      this.filteredOrganizations = this.organizations.filter(row =>
-        row.some((field: any) =>
-          field?.toString().toLowerCase().includes(lowerTerm)
-        )
-      );
-    }
+  async organizationdetails() {
+    this.organizations = await this.sql.getOrganizationDetails('Organization');
+    console.log('Data from DB:', this.organizations);
+    this.filteredOrganizations = [...this.organizations];
   }
+
+  async onSearch(term: string) {
+    if (!term.trim()) {
+      this.filteredOrganizations = [...this.organizations];
+      return;
+    }
+    this.filteredOrganizations = await this.sql.searchOrganizations('Organization', term);
+  }
+
   selectOrganization(org: any) {
     this.selectedOrg = org;
-    console.log('Selected organization:', org);
+    localStorage.setItem('InventoryOrgId', this.selectedOrg.InventoryOrgId);
+    localStorage.setItem('InventoryOrgCode', this.selectedOrg.InventoryOrgCode);
   }
+  
   continue() {
+    console.log("....InventoryOrgId", localStorage.getItem("InventoryOrgId"));
+    this.nav.navigateForward(['activity'])
   }
+
+
   ngOnDestroy() {
-    if(this.subscription){
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
-  
+
 }

@@ -1,0 +1,30 @@
+<app-tile-header pageTitle="Docs 2 Receive" (search)="handleSearch($event)"></app-tile-header>
+
+<ion-content>
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-label>Sort: LastUpdateDate</ion-label>
+      <ion-icon slot="end" name="filter-outline" size="large"></ion-icon>
+    </ion-item>
+  </ion-toolbar>
+
+  <ion-list>
+<ion-card class="doc-card" button="true" *ngFor="let doc of filteredPoHeaders; trackBy: trackByPoNumber" (click)="getOrderDetails(doc.PoNumber)">
+    <ion-item lines="none">
+      <div slot="start" class="doc-number">{{ doc.PoNumber }}</div>
+      <ion-label>
+        <h2>{{ doc.PoType }}</h2>
+        <p>{{ doc.VendorName }}</p>
+        <p>{{ doc.Requestor }}</p>
+      </ion-label>
+
+      <div slot="end" class="item-count">
+        <strong>{{ doc.Items }} {{ doc.Items === 1 ? 'item' : 'items' }}</strong>
+      </div>
+    </ion-item>
+
+    <div class="doc-date">{{ doc.LastUpdateDate }}</div>
+  </ion-card>
+</ion-list>
+
+</ion-content>

@@ -1,15 +1,15 @@
 <ion-content fullscreen>
   <div class="login-background">
-    <h1>Mobile Supply Chain</h1>
+    <strong><h1>Mobile Supply Chain</h1></strong>
     <form [formGroup]="loginForm" (ngSubmit)="login()">
       <ion-list>
         <ion-item>
           <ion-icon name="people-circle"></ion-icon>
-          <ion-input formControlName="username" label="Username" labelPlacement="floating"></ion-input>
+          <strong><ion-input formControlName="username" label="Username" labelPlacement="floating"></ion-input></strong>
         </ion-item>
         <ion-item>
           <ion-icon name="lock-closed"></ion-icon>
-          <ion-input formControlName="password" label="Password" type="password" labelPlacement="floating"></ion-input>
+          <strong><ion-input formControlName="password" label="Password" type="password" labelPlacement="floating"></ion-input></strong>
         </ion-item>
       </ion-list>
 

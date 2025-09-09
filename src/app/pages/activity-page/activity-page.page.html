@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Activity page</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngIf="apiState">
+    <ion-card *ngFor="let state of apiState; let i = index" [class.animate-card]="true" [style.animation-delay]="i * 0.3 + 's'">
+      <ion-item lines="none">
+        <ion-icon 
+          slot="start" 
+          [name]="state.api_status === 'success' ? 'checkmark-circle' : 'close-circle'"
+          [color]="state.api_status === 'success' ? 'success' : 'danger'">
+        </ion-icon>
+        <ion-label>
+          <h2>{{ state.tablename }}</h2>
+          <p>{{ state.api_status }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+    
+  <ion-button *ngIf="hasFailedApis" (click)="reSync()" class="ion-margin-top">
+    <ion-icon slot="start" name="refresh"></ion-icon>
+    Sync Again
+  </ion-button>
+</ion-content>

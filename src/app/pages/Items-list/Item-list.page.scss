@@ -1,0 +1,74 @@
+.scan-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  label {
+    font-weight: bold;
+    margin-right: 8px;
+  }
+
+  .scan-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    flex: 1;
+
+    ion-input {
+      flex: 1;
+      --padding-start: 0;
+    }
+
+    ion-icon {
+      font-size: 20px;
+      color: #555;
+    }
+  }
+}
+
+.sort-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+
+  ion-button {
+    font-size: 14px;
+    --border-radius: 6px;
+  }
+
+  ion-icon {
+    margin-left: 8px;
+  }
+}
+
+.doc-card {
+  margin: 8px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+  .doc-number {
+    background: #006699;
+    color: white;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 6px;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .item-count {
+    font-weight: bold;
+    text-align: right;
+    color: #333;
+  }
+
+  .doc-date {
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #444;
+  }
+}

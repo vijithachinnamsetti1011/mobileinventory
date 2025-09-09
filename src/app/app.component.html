@@ -1,3 +1,4 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+    <ion-router-outlet></ion-router-outlet>
+    <app-network-toast *ngIf="toastMessage" [message]="toastMessage" [type]="toastType"></app-network-toast>
 </ion-app>

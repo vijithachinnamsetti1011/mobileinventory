@@ -18,7 +18,6 @@ export class SearchBarComponent  implements OnInit {
     const term = event.detail.value || ''; 
     this.searchChange.emit(term);
   }
-
   ngOnInit() {}
 
 }

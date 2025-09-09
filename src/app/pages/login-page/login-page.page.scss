@@ -12,7 +12,11 @@ ion-list, ion-item {
   background: transparent !important;
   --background: transparent !important;
   box-shadow: none;
-  
+
+}
+
+ion-icon{
+  color: #000000;
 }
 
 ion-input {
@@ -24,3 +28,10 @@ h1 {
   text-align: center;
   color: #000000; 
 }
+
+
+.custom-loading .loading-wrapper {
+  background: rgba(0, 0, 0, 0.3); 
+  border-radius: 12px;
+}
+

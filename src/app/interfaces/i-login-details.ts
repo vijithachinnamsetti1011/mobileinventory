@@ -24,4 +24,5 @@ export interface Data {
 export interface Metadata {
   name: string;
   type: string;
+  primarykey?:string
 }
