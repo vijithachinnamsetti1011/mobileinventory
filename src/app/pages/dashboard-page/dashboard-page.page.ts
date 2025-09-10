@@ -23,5 +23,9 @@ export class DashboardPagePage implements OnInit {
   goToGoodsReceipt() {
     this.nav.navigateForward(['Item-list']);
   }
+
+  gotoTrasactionHistory(){
+    this.nav.navigateForward(['transaction-history'])
+  }
   
 }

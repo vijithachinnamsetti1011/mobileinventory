@@ -43,5 +43,9 @@ export const routes: Routes = [
     path: 'locators',
     loadComponent: () => import('./pages/locators/locators.page').then( m => m.LocatorsPage)
   },
+  {
+    path: 'transaction-history',
+    loadComponent: () => import('./pages/transaction-history/transaction-history.page').then( m => m.TransactionHistoryPage)
+  },
 
 ];

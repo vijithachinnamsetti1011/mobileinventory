@@ -7,16 +7,23 @@
   </ion-toolbar>
 
   <ion-toolbar>
-    <ion-item lines="none">
+    <div class="scan-search-container">
       <ion-label position="fixed">Doc#</ion-label>
-      <ion-input 
-        placeholder="Scan Doc" 
-        (ionInput)="onScanInput($event)">
-      </ion-input>
-      <ion-button slot="end" fill="clear" (click)="toggleSearch()">
+      <ion-item lines="none" class="scan-box">
+        <ion-input 
+          placeholder="Scan Doc" 
+          (ionInput)="onScanInput($event)">
+        </ion-input>
+      </ion-item>
+      
+      <ion-button fill="outline" class="scan-btn">
+        <app-scanner (click)="openscanner()"></app-scanner>
+      </ion-button>
+
+      <ion-button fill="clear" class="search-btn" (click)="toggleSearch()">
         <ion-icon slot="icon-only" name="search-outline"></ion-icon>
       </ion-button>
-    </ion-item>
+    </div>
   </ion-toolbar>
 
   <ion-toolbar *ngIf="isSearchVisible">

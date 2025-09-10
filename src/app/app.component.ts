@@ -16,7 +16,8 @@ export class AppComponent implements OnInit{
 
   constructor(private sql: SqLiteService, private network: Network) {}
   ngOnInit() {
-    this.sql.ConnectToDatabase()
+    this.sql.ConnectToDatabase();
+    this.networkConnection();
   }
   networkConnection(){
     this.network.status$.subscribe(isOnline => {

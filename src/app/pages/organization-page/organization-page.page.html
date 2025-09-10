@@ -19,7 +19,9 @@
     </ion-item>
   </ion-list>
 
-<ion-button expand="block" (click)="continue()" [disabled]="!selectedOrg"> Continue </ion-button>
-
   <p *ngIf="filteredOrganizations.length === 0">No results found.</p>
 </ion-content>
+
+<ion-footer>
+  <ion-button expand="block" (click)="continue()" [disabled]="!selectedOrg"> Continue </ion-button>
+</ion-footer>

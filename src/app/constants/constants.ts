@@ -42,7 +42,7 @@ export const URLS = {
     FETCH_SERIAL_TABLE: `${environment.commonurl}${API_CODES._22A}/getSerialTableType/${InventoryOrgId}/"/468517/473573`,
     FETCH_DOCUMENT_FOR_RECEIVING: `${environment.commonurl}${API_CODES._20D}/getDocumentsForReceiving/${InventoryOrgId}/"null"/"Y"`,
     FETCH_LOTS_TABLE: `${environment.commonurl}${API_CODES._22A}/getLotsTableType/${InventoryOrgId}/""`,
-//    FETCH_GLACCOUNT: `${environment.commonurl}${API_CODES._20D}/getglaccounts/${OrganizationID}`,
+    FETCH_GLACCOUNT: `${environment.commonurl}${API_CODES._20D}/getglaccounts/${OrganizationID}`,
 //    FETCH_RESTRICTED_SUBINVENTORIES: `${environment.commonurl}${API_CODES._20D}/getRestrictedSubinventories/${InventoryOrgId}/"null"/"Y"`,
 //    FETCH_RESTRICTED_LOCATORS: `${environment.commonurl}${API_CODES._20D}/getRestrictedLocators/${InventoryOrgId}/"null"/"Y"`,
 //    FETCH_EMPLOYEE_TABLE: `${environment.commonurl}${API_CODES._23A}/getEmployeesTable/${InventoryOrgId}/""`,
@@ -64,7 +64,7 @@ export const METADATA_URLS = {
     DOCUMENT_FOR_RECEIVING: `${environment.commonurl}${API_CODES._20D}/getDocumentsForReceiving/metadata`,
     GLPERIODS: `${environment.commonurl}${API_CODES._20D}/getGLPeriodsmetadata`,
     SUBINVENTORY: `${environment.commonurl}${API_CODES._20D}/getSubinventories/metadata`,
-//    GLACCOUNT: `${environment.commonurl}${API_CODES._20D}/getglaccountsmetadata`,
+    GLACCOUNT: `${environment.commonurl}${API_CODES._20D}/getglaccountsmetadata`,
 //    RESTRICTED_SUBINVENTORIES: `${environment.commonurl}${API_CODES._20D}/getRestrictedSubinventories/metadata`,
 //    RESTRICTED_LOCATORS: `${environment.commonurl}${API_CODES._20D}/getRestrictedLocators/metadata`,
 //    LOCATIONS: `${environment.commonurl}${API_CODES._20D}/getLocations/metadata`,
@@ -167,17 +167,17 @@ export const LIST_OF_APIS = [
         metadata: '',
         responsivekey: ''
     },
-    // {
-    //     apiname: 'getglaccounts',
-    //     tablename: 'glaccounts',
-    //     url: URLS.FETCH_GLACCOUNT,
-    //     csv_type: false,
-    //     api_type: API_type.MASTER,
-    //     http_type: HTTP_TYPE.GET,
-    //     api_status: API_STATUS.START,
-    //     metadata: METADATA_URLS.GLACCOUNT,
-    //     responsivekey: 'GLAccounts'
-    // },
+    {
+        apiname: 'getglaccounts',
+        tablename: 'glaccounts',
+        url: URLS.FETCH_GLACCOUNT,
+        csv_type: false,
+        api_type: API_type.MASTER,
+        http_type: HTTP_TYPE.GET,
+        api_status: API_STATUS.START,
+        metadata: METADATA_URLS.GLACCOUNT,
+        responsivekey: 'GLAccounts'
+    },
     // {
     //     apiname: 'getRestrictedSubinventories',
     //     tablename: 'restrictedsubinventories',

@@ -3,15 +3,22 @@ import { IonToolbar, IonHeader, IonButtons, IonBackButton, IonTitle, IonSearchba
 import { BackButtonComponent } from '../back-button/back-button.component';
 import { SearchBarComponent } from "../search-bar/search-bar.component";
 import { CommonModule } from '@angular/common';
+import { addIcons } from 'ionicons';
+import { scan, searchOutline } from 'ionicons/icons';
+import { ScannerComponent } from '../scanner/scanner.component';
 
 @Component({
   selector: 'app-tile-header',
   templateUrl: './tile-header.component.html',
   styleUrls: ['./tile-header.component.scss'],
   standalone: true,
-  imports: [IonIcon, IonButton, IonLabel, IonInput, IonItem, IonTitle, IonButtons, IonHeader, IonToolbar, BackButtonComponent, SearchBarComponent, CommonModule]
+  imports: [IonIcon, IonButton, IonLabel, IonInput, IonItem, IonTitle, IonButtons, IonHeader, IonToolbar, BackButtonComponent, SearchBarComponent, CommonModule, ScannerComponent]
 })
 export class TileHeaderComponent {
+
+  constructor(){
+    addIcons({searchOutline,scan});
+  }
 
   @Input() pageTitle: string = 'Page';
   @Input() showBackButton: boolean = true;
@@ -35,5 +42,9 @@ export class TileHeaderComponent {
 
   onSearchChange(event: any) {
     this.search.emit(event);
+  }
+
+  openscanner(){
+    //implement a barcode scanner
   }
 }

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonSearchbar, IonIcon, IonButton, IonLabel } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonSearchbar, IonIcon, IonButton, IonLabel, IonFooter } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { SearchBarComponent } from "src/app/common-components/search-bar/search-bar.component";
@@ -16,7 +16,7 @@ import { NavController } from '@ionic/angular'
   templateUrl: './organization-page.page.html',
   styleUrls: ['./organization-page.page.scss'],
   standalone: true,
-  imports: [IonButton, IonIcon, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, SearchBarComponent]
+  imports: [IonButton, IonIcon, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, SearchBarComponent, IonFooter]
 })
 export class OrganizationPagePage implements OnInit, OnDestroy {
 
@@ -50,11 +50,17 @@ export class OrganizationPagePage implements OnInit, OnDestroy {
   }
 
   selectOrganization(org: any) {
-    this.selectedOrg = org;
-    localStorage.setItem('InventoryOrgId', this.selectedOrg.InventoryOrgId);
-    localStorage.setItem('InventoryOrgCode', this.selectedOrg.InventoryOrgCode);
+    if (this.selectedOrg?.InventoryOrgId === org.InventoryOrgId) {
+      this.selectedOrg = null;
+      localStorage.removeItem('InventoryOrgId');
+      localStorage.removeItem('InventoryOrgCode');
+    } else {
+      this.selectedOrg = org;
+      localStorage.setItem('InventoryOrgId', this.selectedOrg.InventoryOrgId);
+      localStorage.setItem('InventoryOrgCode', this.selectedOrg.InventoryOrgCode);
+    }
   }
-  
+
   continue() {
     console.log("....InventoryOrgId", localStorage.getItem("InventoryOrgId"));
     this.nav.navigateForward(['activity'])
