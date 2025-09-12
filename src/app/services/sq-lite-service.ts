@@ -126,8 +126,6 @@ export class SqLiteService {
     }
   }
 
-  //
-
   async groupByData(tableName: string): Promise<any[]> {
     if (!this.db) {
       await this.ConnectToDatabase();
@@ -142,6 +140,7 @@ export class SqLiteService {
       return [];
     }
   }
+
   async getItemsByPoNumber(tableName: string, poNumber: string): Promise<any[]> {
     if (!this.db) {
       await this.ConnectToDatabase();
@@ -212,13 +211,11 @@ export class SqLiteService {
     if (!this.db) {
       await this.ConnectToDatabase();
     }
-
     const lowerTerm = `%${searchTerm.toLowerCase()}%`;
-
     try {
       const result = await this.db!.query(
         `SELECT PoNumber, PoType, VendorName, Requestor, LastUpdateDate, COUNT(*) as Items 
-       FROM ${tableName} 
+      FROM ${tableName} 
        WHERE LOWER(PoNumber) LIKE ? OR LOWER(VendorName) LIKE ? OR LOWER(Requestor) LIKE ?
        GROUP BY PoNumber
        ORDER BY LastUpdateDate DESC`,
@@ -230,5 +227,53 @@ export class SqLiteService {
       return [];
     }
   }
+
+  async searchItemsByNumber(table: string, poNumber: string, searchTerm: string): Promise<any[]> {
+    if (!this.db) {
+      await this.ConnectToDatabase();
+    }
+
+    const lowerTerm = `%${searchTerm.toLowerCase()}%`;
+
+    try {
+      const result = await this.db!.query(
+        `SELECT * FROM ${table}
+       WHERE PoNumber = ?
+         AND (LOWER(ItemNumber) LIKE ? OR LOWER(ItemDesc) LIKE ?)`,
+        [poNumber, lowerTerm, lowerTerm]
+      );
+
+      return result.values ?? [];
+    } catch (err) {
+      console.error("Error running item search query:", err);
+      return [];
+    }
+  }
+
+  async getLatestPoHeaders(tableName: string): Promise<any[]> {
+  if (!this.db) {
+    await this.ConnectToDatabase();
+  }
+  try {
+    const query = `
+      SELECT t.*
+      FROM ${tableName} t
+      INNER JOIN (
+          SELECT PoNumber, MAX(LastUpdateDate) AS LatestDate
+          FROM ${tableName}
+          GROUP BY PoNumber
+      ) grouped
+      ON t.PoNumber = grouped.PoNumber AND t.LastUpdateDate = grouped.LatestDate
+      ORDER BY t.LastUpdateDate DESC
+    `;
+    const result = await this.db!.query(query);
+    return result.values ?? [];
+  } catch (err) {
+    console.error(`Error fetching latest PoHeaders from ${tableName}:`, err);
+    return [];
+  }
+}
+
+
 
 }

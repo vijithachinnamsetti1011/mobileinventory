@@ -31,6 +31,7 @@ export const OrganizationID = localStorage.getItem('org_Id');
 export const Responsibility_Id = localStorage.getItem('res_Id')
 export const User_Id = localStorage.getItem('user_Id')
 export const Person_Id = localStorage.getItem('person_Id')
+export const lastSync_Date = localStorage.getItem('lastSyncDate')
 
 export const URLS = {
     POST_TRANSACTION:`${environment.commonurl}${API_CODES._20D}/createGoodsReceiptTransactions`,
@@ -40,7 +41,7 @@ export const URLS = {
     FETCH_GLPERIODS: `${environment.commonurl}${API_CODES._20D}/getGLPeriods/${OrganizationID}`,
     FETCH_INVENTORY_PERIODS: `${environment.commonurl}${API_CODES._20D}/getInventoryPeriods/${OrganizationID}/${InventoryOrgId}`,
     FETCH_SERIAL_TABLE: `${environment.commonurl}${API_CODES._22A}/getSerialTableType/${InventoryOrgId}/"/468517/473573`,
-    FETCH_DOCUMENT_FOR_RECEIVING: `${environment.commonurl}${API_CODES._20D}/getDocumentsForReceiving/${InventoryOrgId}/"null"/"Y"`,
+    FETCH_DOCUMENT_FOR_RECEIVING: `${environment.commonurl}${API_CODES._20D}/getDocumentsForReceiving/${InventoryOrgId}/${lastSync_Date}/"Y"`,
     FETCH_LOTS_TABLE: `${environment.commonurl}${API_CODES._22A}/getLotsTableType/${InventoryOrgId}/""`,
     FETCH_GLACCOUNT: `${environment.commonurl}${API_CODES._20D}/getglaccounts/${OrganizationID}`,
 //    FETCH_RESTRICTED_SUBINVENTORIES: `${environment.commonurl}${API_CODES._20D}/getRestrictedSubinventories/${InventoryOrgId}/"null"/"Y"`,

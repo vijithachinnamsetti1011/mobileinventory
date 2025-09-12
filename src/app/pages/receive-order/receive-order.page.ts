@@ -1,6 +1,6 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, NgControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonCardTitle, IonCardContent, IonCard, IonCardHeader, IonCardSubtitle, IonLabel, IonItem, IonNote, IonGrid, IonRow, IonCol, IonButton, IonInput, IonIcon } from '@ionic/angular/standalone';
 import { BackButtonComponent } from 'src/app/common-components/back-button/back-button.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,9 +14,7 @@ import { chevronForwardSharp, create } from 'ionicons/icons';
 import { register } from 'swiper/element/bundle';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
 register();
-
 
 
 @Component({
@@ -26,7 +24,7 @@ register();
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ModalController],
-  imports: [ IonIcon, IonInput, FormsModule, ReactiveFormsModule, IonItem, IonLabel, IonCardSubtitle, IonCardHeader, IonCard, IonCardContent, IonCardTitle, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, BackButtonComponent, IonButton]
+  imports: [IonIcon, IonInput, FormsModule, ReactiveFormsModule, IonItem, IonLabel, IonCardSubtitle, IonCardHeader, IonCard, IonCardContent, IonCardTitle, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, BackButtonComponent, IonButton]
 })
 export class ReceiveOrderPage implements OnInit, OnDestroy {
 
@@ -39,14 +37,14 @@ export class ReceiveOrderPage implements OnInit, OnDestroy {
   itemdetails: FormGroup;
   subscription!: Subscription;
 
-  constructor(private http : HttpClient,private route: ActivatedRoute, private sql: SqLiteService, private router: Router, private fb: FormBuilder, private nav: NavController, private modalCtrl: ModalController) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private sql: SqLiteService, private router: Router, private fb: FormBuilder, private nav: NavController, private modalCtrl: ModalController) {
     this.itemdetails = this.fb.group({
       coo: ['', Validators.required],
-      subinv: ['', Validators.required],
-      loc: ['', Validators.required],
+      subinv: [''],
+      loc: new FormControl({ value: '', disabled: true }),
       qty: ['', Validators.required]
     }),
-    addIcons({chevronForwardSharp, create})
+      addIcons({ chevronForwardSharp, create })
   }
 
   ngOnInit() {
@@ -60,6 +58,15 @@ export class ReceiveOrderPage implements OnInit, OnDestroy {
       this.poNumber = data.poNumber;
       this.items = await this.sql.receiveOrderData('documentsforreceiving', this.itemNumber, this.poNumber);
       console.log('Fetched items:', this.items);
+      if (this.items[0]?.RoutingName === 'Direct Delivery') {
+        this.itemdetails.get('subinv')?.setValidators(Validators.required);
+        this.itemdetails.get('loc')?.setValidators(Validators.required);
+      } else {
+        this.itemdetails.get('subinv')?.clearValidators();
+        this.itemdetails.get('loc')?.clearValidators();
+      }
+      this.itemdetails.get('subinv')?.updateValueAndValidity();
+      this.itemdetails.get('loc')?.updateValueAndValidity();
     }
   }
 
@@ -80,7 +87,8 @@ export class ReceiveOrderPage implements OnInit, OnDestroy {
 
       this.itemdetails.patchValue({
         subinv: this.subinventorycode
-      })
+      });
+      this.itemdetails.get('loc')?.enable();
     }
   }
 
@@ -112,13 +120,16 @@ export class ReceiveOrderPage implements OnInit, OnDestroy {
     console.log("Form Data:", formData);
   }
 
-  Reset(){
-    const resetForm = this.itemdetails.reset;
+  Resetform() {
+    this.itemdetails.reset();
+    this.subinventorycode = '';
+    this.locator = '';
+    this.itemdetails.get('loc')?.disable();
   }
 
   submitGoodsReceipt() {
     const payload = this.createPayLoad();
-    this.subscription = this.http.post<any>(URLS.POST_TRANSACTION,payload).subscribe({
+    this.subscription = this.http.post<any>(URLS.POST_TRANSACTION, payload).subscribe({
       next: async (res) => {
         console.log('Goods Receipt created successfully:', res);
       },

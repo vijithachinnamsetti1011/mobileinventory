@@ -20,38 +20,52 @@
         <p><strong>Shipment Line Number:</strong> {{ items[0]?.PoShipmentNumber }}</p>
         <p><strong>Quantity Ordered:</strong> {{ items[0]?.QtyOrdered }} {{ items[0]?.ItemUom }}</p>
         <p><strong>Routing Name:</strong> {{ items[0]?.RoutingName }}</p>
+
+        <ion-item>
+          <ion-label>Coo:</ion-label>
+          <ion-input formControlName="coo" type="text"></ion-input>
+        </ion-item>
+        <ion-note color="danger"
+          *ngIf="itemdetails.get('coo')?.touched && itemdetails.get('coo')?.hasError('required')">
+          COO is required
+        </ion-note>
+        <div *ngIf="items[0]?.RoutingName === 'Direct Delivery'">
+        <ion-item>
+          <ion-label>SubInventory:</ion-label>
+          <ion-input [value]="subinventorycode" formControlName="subinv"></ion-input>
+          <ion-icon slot="end" name="create" (click)="Resetform()"></ion-icon>
+          <ion-icon slot="end" name="chevron-forward-sharp" (click)="openSubInventory()"></ion-icon>
+        </ion-item>
+        <ion-note color="danger"
+          *ngIf="itemdetails.get('subinv')?.touched && itemdetails.get('subinv')?.hasError('required')">
+          SubInventory is required
+        </ion-note>
+
+        <ion-item>
+          <ion-label>Locator:</ion-label>
+          <ion-input formControlName="loc"></ion-input>
+          <ion-icon slot="end" name="create" (click)="Resetform()"></ion-icon>
+          <ion-icon slot="end" name="chevron-forward-sharp" (click)="openLocators()"
+            *ngIf="itemdetails.get('subinv')?.value"></ion-icon>
+        </ion-item>
+        <ion-note color="danger"
+          *ngIf="itemdetails.get('loc')?.touched && itemdetails.get('loc')?.hasError('required')">
+          Locator is required
+        </ion-note>
+        </div>
         
-          <ion-item>
-            <ion-label>Coo: </ion-label>
-            <ion-input formControlName="coo" type="text" ngDefaultControl></ion-input>
-          </ion-item>
+        <ion-item>
+          <ion-label>Qty Receiving:</ion-label>
+          <ion-input formControlName="qty" type="number"></ion-input>
+        </ion-item>
+        <ion-note color="danger"
+          *ngIf="itemdetails.get('qty')?.touched && itemdetails.get('qty')?.hasError('required')">
+          Quantity is required
+        </ion-note>
 
-          <ion-item>
-            <ion-label>SubInventory: </ion-label>
-            <ion-input [value]='subinventorycode' formControlName="subinv"></ion-input>
-            <ion-icon slot="end" name="create" (click)="Reset()"></ion-icon>
-            <ion-icon slot="end" name="chevron-forward-sharp" (click)="openSubInventory()"></ion-icon>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Locator: </ion-label>
-            <ion-input formControlName="loc"></ion-input>
-            <ion-icon slot="end" name="create" (click)="Reset()"></ion-icon>
-            <ion-icon slot="end" name="chevron-forward-sharp" (click)="openLocators()"></ion-icon>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Qty Receiving: </ion-label>
-            <ion-input formControlName="qty" type="Number" ngDefaultControl></ion-input>
-          </ion-item>
-
-          <!-- <ion-item>
-            <ion-label>Notes and Attachments: </ion-label>
-            <ion-input formControlName="n&a" ngDefaultControl></ion-input>
-          </ion-item> -->
-      
       </ion-card-content>
     </ion-card>
-    <ion-button type="submit" (click)="submitGoodsReceipt()">Receive + Next</ion-button>
+
+    <ion-button  type="submit" [disabled]="itemdetails.invalid" (click)="submitGoodsReceipt()">Receive + Next</ion-button>
   </form>
 </ion-content>

@@ -1,0 +1,25 @@
+.scan-search-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center;      
+  width: 100%;
+}
+
+.scan-box {
+  flex: none;          
+  width: 35%;          
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0 5px;
+  margin: 0 8px;      
+}
+
+.scan-btn {
+  margin-left: 6px;
+  --border-radius: 8px;
+}
+
+.search-btn {
+  margin-left: 6px;
+  --color: var(--ion-color-primary);
+}

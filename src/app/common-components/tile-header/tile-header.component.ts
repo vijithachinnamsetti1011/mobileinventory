@@ -1,50 +1,39 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { IonToolbar, IonHeader, IonButtons, IonBackButton, IonTitle, IonSearchbar, IonItem, IonInput, IonLabel, IonButton, IonIcon, IonNavLink } from "@ionic/angular/standalone";
 import { BackButtonComponent } from '../back-button/back-button.component';
 import { SearchBarComponent } from "../search-bar/search-bar.component";
 import { CommonModule } from '@angular/common';
 import { addIcons } from 'ionicons';
 import { scan, searchOutline } from 'ionicons/icons';
-import { ScannerComponent } from '../scanner/scanner.component';
+import { Scanner } from 'src/app/services/scanner';
+import { ToastService } from 'src/app/services/toast-service';
+import { ScanSearchComponent } from "../scan-search/scan-search.component";
 
 @Component({
   selector: 'app-tile-header',
   templateUrl: './tile-header.component.html',
   styleUrls: ['./tile-header.component.scss'],
   standalone: true,
-  imports: [IonIcon, IonButton, IonLabel, IonInput, IonItem, IonTitle, IonButtons, IonHeader, IonToolbar, BackButtonComponent, SearchBarComponent, CommonModule, ScannerComponent]
+  imports: [IonTitle, IonButtons, IonHeader, IonToolbar, BackButtonComponent, CommonModule, ScanSearchComponent]
 })
 export class TileHeaderComponent {
-
-  constructor(){
-    addIcons({searchOutline,scan});
-  }
-
   @Input() pageTitle: string = 'Page';
   @Input() showBackButton: boolean = true;
   @Output() scan = new EventEmitter<string>();
   @Output() search = new EventEmitter<string>();
 
-  isSearchVisible = false;
-  private debounceTimer?: any;
 
-  toggleSearch() {
-    this.isSearchVisible = !this.isSearchVisible;
+  constructor(private barcode: Scanner, private toast: ToastService) {
+    addIcons({ searchOutline, scan });
   }
 
-  onScanInput(event: any) {
-    clearTimeout(this.debounceTimer);
-    const scanTerm = event.detail.value || '';
-    this.debounceTimer = setTimeout(() => {
-      this.scan.emit(scanTerm);
-    }, 300); 
+  onScan(data: string) {
+    console.log('Scanned Data:', data);
+    this.toast.presentToast('top', 'success', `Scanned: ${data}`);
   }
 
-  onSearchChange(event: any) {
-    this.search.emit(event);
+  onSearch(query: string) {
+    console.log('Search Query:', query);
   }
 
-  openscanner(){
-    //implement a barcode scanner
-  }
 }
